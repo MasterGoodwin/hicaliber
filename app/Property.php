@@ -11,22 +11,25 @@ class Property extends Model
 
     public function scopeFilter($query, $params)
     {
-        if (isset($params['name']))
-            $query->where("code", "LIKE", "%".trim($params['name'])."%");
+        if (!empty($params['name']))
+            $query->where("name", "LIKE", "%".trim($params['name'])."%");
 
-        if (isset($params['price']))
-            $query->whereBetween("price", $params['price']);
+        if (!empty($params['priceFrom']))
+            $query->where("price", '>=', $params['priceFrom']);
 
-        if (isset($params['bedrooms']))
+        if (!empty($params['priceTo']))
+            $query->where("price", '<=', $params['priceTo']);
+
+        if (!empty($params['bedrooms']))
             $query->where("bedrooms", $params['bedrooms']);
 
-        if (isset($params['bathrooms']))
+        if (!empty($params['bathrooms']))
             $query->where("bathrooms", $params['bathrooms']);
 
-        if (isset($params['storeys']))
+        if (!empty($params['storeys']))
             $query->where("storeys", $params['storeys']);
 
-        if (isset($params['garages']))
+        if (!empty($params['garages']))
             $query->where("garages", $params['garages']);
 
         return $query;
